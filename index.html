@@ -26,25 +26,15 @@
           <table class="table">
                 <thead class="thead-dark">
                   <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
+                    <th scope="col">Train Name</th>
+                    <th scope="col">Destination</th>
+                    <th scope="col">Frequency (min)</th>
+                    <th scope="col">Next Arrival</th>
+                    <th scope="col">Departs in (min)</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
+                  
                 </tbody>
             </table>
         </div>
@@ -57,7 +47,7 @@
         <form>
             <div class="form-group">
                 <label for="name">Train Name</label>
-                <input type="text" class="form-control" id="name">
+                <input type="text" class="form-control" id="name" required>
             </div>
             <div class="form-group">
                 <label for="destination">Destination</label>
@@ -70,7 +60,7 @@
             </div>
             <div class="form-group">
                 <label for="frequency">Frequency</label>
-                <input type="text" class="form-control" id="frequency">
+                <input type="text" class="form-control" id="frequency" required>
                 <small id="first-train-help" class="form-text text-muted">In minutes (e.g. 75 for 1 hour and 15 minutes).</small>
             </div>
 
