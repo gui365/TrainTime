@@ -14,11 +14,10 @@ var database = firebase.database();
 
 // Get values from input fields and store in Firebase
 var name = $("#name").val();
-var destination = $("#destination");
-var firstTrain = $("#first-train");
-var frequency = $("#frequency");
+var destination = $("#destination").val();
+var firstTrain = $("#first-train").val();
+var frequency = $("#frequency").val();
 
 function addTrain() {
-    console.log("hi");
-    
+        
 }
