@@ -174,3 +174,16 @@ function clock() {
   }
   
   setInterval(clock, 1000);
+
+
+function scrollToTop() {
+    if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+        $("#go-up").css("display", "flex");
+    } else {
+        $("#go-up").css("display", "none");
+    };
+};
+
+window.onscroll = function() {
+    scrollToTop();
+};

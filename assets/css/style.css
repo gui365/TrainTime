@@ -1,13 +1,13 @@
 body {
     background-color: rgb(231, 231, 231);
     font-family: "Roboto", Arial, Helvetica, sans-serif;
-    
 }
 
 h1 {
-    font-size: 2rem !important;
+    font-size: 2.1rem !important;
     font-family: "Fjalla One", Arial, Helvetica, sans-serif;
     margin: 0;
+    color: white;
 }
 
 p {
@@ -28,8 +28,40 @@ form {
 }
 
 .jumbotron {
-    background: linear-gradient(to right, rgb(123, 179, 224), rgb(3, 29, 53));
+    background: linear-gradient(to right, rgb(3, 29, 53), rgb(123, 179, 224));
     padding: 1rem 0;
+    margin: 0;
+}
+
+#station-img {
+    width: 100vw;
+}
+
+#welcome {
+    position: relative;
+}
+
+#welcome-title {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 2rem;
+    width: 45%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: rgb(255, 255, 255);
+    font-family: "Oswald", Arial, Helvetica, sans-serif;
+}
+
+h2 {
+    font-size: 1.7rem;
+    color: rgb(123, 179, 224);
+    margin: 1rem 0;
+}
+
+span, ul {
+    font-family: "Roboto", Arial, Helvetica, sans-serif;
+    font-size: 0.9rem;
 }
 
 .container {
@@ -38,4 +70,75 @@ form {
 
 tr {
     border-radius: 10px;
+}
+
+.card {
+    margin: 0.5rem;
+    border-radius: 5px 5px 20px 20px;
+}
+
+#wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+#list {
+    width: 75vw;
+}
+
+#add-train {
+    width: 20vw;
+    height: 50%;
+}
+
+.card-header {
+    background-color: rgb(102, 180, 216);
+    font-weight: bold;
+    font-family: "Oswald", Arial, Helvetica, sans-serif;
+    font-size: 1.2rem;
+    height: 60px;
+}
+
+#go-up {
+    background-color: black;
+    width: 50px;
+    height: 50px;
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    border-radius: 50%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+p {
+    font-size: 1.06rem;
+    color: white;
+    font-family: "Oswald", Arial, Helvetica, sans-serif;
+}
+
+a, a:hover {
+    color: white;
+}
+
+@media screen and (max-width: 1200px) {
+    #wrapper {
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
+
+    #list {
+        width: 98%;
+    }
+    
+    #add-train {
+        width: 98%;
+    }
+
+    table td, table th{
+        font-size: 1.5vw;
+    }
+
 }
