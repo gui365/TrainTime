@@ -1,3 +1,19 @@
+body {
+    background-color: rgb(231, 231, 231);
+    font-family: "Roboto", Arial, Helvetica, sans-serif;
+    
+}
+
+h1 {
+    font-size: 2rem !important;
+    font-family: "Fjalla One", Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+
+p {
+    margin: 0;
+}
+
 .card {
     margin: 0 4rem 3rem 4rem;
 }
@@ -9,4 +25,17 @@ form {
 #clock {
     padding: 0.5rem 2rem;
     font-size: 1rem;
+}
+
+.jumbotron {
+    background: linear-gradient(to right, rgb(123, 179, 224), rgb(3, 29, 53));
+    padding: 1rem 0;
+}
+
+.container {
+    margin: 0 1rem;
+}
+
+tr {
+    border-radius: 10px;
 }

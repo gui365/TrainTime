@@ -90,7 +90,10 @@ function calculateNext() {
         console.log(nextArrival);
         console.log(minutesAway);
 
-    }
+    } else if (currentTime === firstTrain) {
+        nextArrival = parseInt(firstTrain) + parseInt(frequency);
+        minutesAway = parseInt(nextArrival) - parseInt(currentTime);
+    };
     
     firstTrain = convert(firstTrain);
     nextArrival = convert(nextArrival);
@@ -121,9 +124,9 @@ function updateInfo() {
         var frequency = $("<td>"+snapshot[i].frequency+"</td>");
         var nextArrival = $("<td>"+snapshot[i].nextArrival+"</td>");
         if(snapshot[i].plusDays === 0) {
-            plus = "&nbsp;"
+            plus = $("<td>");
         } else {
-            plus = $("<td><span style='border-radius: 5px; padding: 3px; background-color: black; color: white; font-size: 0.5rem;'>+" + snapshot[i].plusDays + "</span></td>");
+            plus = $("<td><span style='font-weight: bold; border-radius: 5px; padding: 3px 5px; background-color: black; color: white; font-size: 0.6rem;'>+" + snapshot[i].plusDays + "</span></td>");
             plusDays = 0;
         };
         var minutesAway = $("<td id='minutes-away'>"+snapshot[i].minutesAway+"</td>");
@@ -136,7 +139,8 @@ function updateInfo() {
 // Convert minutes to hours:minutes format
 function convert(t) {
     var hours = Math.floor(parseInt(t/60));
-
+    var hoursNew;
+    
     if (hours < 10) {
         hours = "0" + hours;
     } else if (hours > 23) {
