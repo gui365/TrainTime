@@ -60,7 +60,8 @@ form {
 
 h2 {
     font-size: 1.7rem;
-    color: rgb(123, 179, 224);
+    /* color: rgb(123, 179, 224); */
+    color: rgb(255, 193, 7);
     margin: 0.5rem 0;
 }
 
@@ -72,6 +73,13 @@ span, ul {
 ul {
     line-height: 1.9;
     list-style-type: none;
+}
+
+li i {
+    color: rgb(255, 193, 7);
+    margin-left: -1.4rem;
+    font-size: 0.8rem;
+    margin-right: 0.7rem;
 }
 
 /* .container {
@@ -108,19 +116,21 @@ tr {
     font-family: "Oswald", Arial, Helvetica, sans-serif;
     font-size: 1.2rem;
     height: 60px;
+    color: white;
 }
 
 #go-up {
     background-color: black;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     position: fixed;
-    bottom: 25px;
-    right: 25px;
+    bottom: 35px;
+    right: 15px;
     border-radius: 50%;
     display: none;
     justify-content: center;
     align-items: center;
+    font-size: 1.5rem;
 }
 
 p {
@@ -142,6 +152,13 @@ a, a:hover {
     /* background-color: rgba(255, 255, 255, 0.1); */
     border-radius: 50%;
     box-shadow: 0 3px rgba(7, 45, 102, 0.4);
+}
+
+button {
+    background-color: rgb(58, 138, 175) !important;
+    border: none !important;
+    border-radius: 15px !important;
+    font-size: 0.8rem !important;
 }
 
 
