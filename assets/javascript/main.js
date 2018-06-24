@@ -12,20 +12,28 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 
+database.ref().on("value", function(snap){
+    snapshot = snap.val();
+    updateInfo();
+});
+
 // Global variables
+var snapshot;
 var trainIndex = 0;
 var name;
 var destination;
 var firstTrain;
 var frequency;
 var nextArrival;
+var plusDays = 0;
 var minutesAway;
-var currentTime = (moment().format("HH")*60) + (moment().format("mm")*1); 
+var currentTime;
 
 
 // 1. Get values and validate
 function addTrain() {
     event.preventDefault();
+    currentTime = (moment().format("HH")*60) + (moment().format("mm")*1);
 
     // Get values from input fields
     name = $("#name").val();
@@ -34,13 +42,23 @@ function addTrain() {
     frequency = $("#frequency").val();
 
     // Validation for the firstTrain input field
-    if (parseInt(firstTrain) > 2359 || parseInt(firstTrain) < 0) {
-        alert("Please enter a number between 0000 and 2359");
-    } else if (firstTrain.length !== 4) {
-        alert("'First train' should be a 4 digit number");
+    if (name === "") {
+        alert("Please enter a train name")
     } else {
-        calculateFirst();
-    }
+        if (parseInt(firstTrain) > 2359 || parseInt(firstTrain) < 0) {
+            alert("Please enter a number between 0000 and 2359");
+        } else if (firstTrain.length !== 4) {
+            alert("'First train' should be a 4 digit number");
+        } else if (firstTrain.substring(2, 4) > 59) {
+            alert("Please enter a valid time");
+        } else {
+            calculateFirst();
+            $("#name").val("");
+            $("#destination").val("");
+            $("#first-train").val("");
+            $("#frequency").val("");
+        };
+    };
 };
 
 
@@ -48,14 +66,6 @@ function addTrain() {
 function calculateFirst() {
     // firstTrain time in minutes
     firstTrain = (firstTrain.substring(0, 2)*60) + (firstTrain.substring(2, 4)*1);
-    
-    database.ref(trainIndex).update({
-        name: name,
-        destination: destination,
-        firstTrain: firstTrain,
-        frequency: frequency
-    });
-
     calculateNext();
 };
 
@@ -63,39 +73,100 @@ function calculateFirst() {
 // 3. Calculate when the next time will arrive, and update Firebase
 function calculateNext() {
     // nextArrival variable = time of first train + ( Math.ceil of the current time divided by the frequency ) minus ( the Math.floor of the first train time divided by the frequency ), times the frequency
-    nextArrival = parseInt(firstTrain) + (Math.ceil(parseFloat((parseInt(currentTime)/parseInt(frequency))) - Math.floor(parseFloat(parseInt(firstTrain)/parseInt(frequency)))) * parseInt(frequency));
-    minutesAway = parseInt(nextArrival) - parseInt(currentTime);
+    // nextArrival = parseInt(firstTrain) + (Math.ceil(parseFloat((parseInt(currentTime)/parseInt(frequency))) - Math.floor(parseFloat(parseInt(firstTrain)/parseInt(frequency)))) * parseInt(frequency));
+    currentTime = (moment().format("HH")*60) + (moment().format("mm")*1);
 
-    // console.log("First train " + firstTrain);
-    // console.log("Current time " + currentTime);
-    // console.log("Next train " + nextArrival);
-    // console.log("Departs in " + minutesAway);
+    if (firstTrain < currentTime) {
+        // nextArrival is the time of the first train, plus -> (currentTime - firstTrain) / frequency = ratio
+        nextArrival = parseInt(firstTrain) + (Math.ceil((parseInt(currentTime) - parseInt(firstTrain)) / parseInt(frequency)) * parseInt(frequency));
+        minutesAway = parseInt(nextArrival) - parseInt(currentTime);
+        console.log(nextArrival);
+        console.log(minutesAway);
+
+    } else if (currentTime < firstTrain) {
+        // nextArrival is the time of the first train, plus -> (currentTime - firstTrain) / frequency = ratio
+        nextArrival = parseInt(firstTrain) - (Math.floor((parseInt(firstTrain) - parseInt(currentTime)) / parseInt(frequency)) * parseInt(frequency));
+        minutesAway =  parseInt(nextArrival) - parseInt(currentTime);
+        console.log(nextArrival);
+        console.log(minutesAway);
+
+    }
+    
+    firstTrain = convert(firstTrain);
+    nextArrival = convert(nextArrival);
 
     database.ref(trainIndex).update({
+        name: name,
+        destination: destination,
+        firstTrain: firstTrain,
+        frequency: frequency,
         nextArrival: nextArrival,
+        plusDays: plusDays,
         minutesAway: minutesAway
     });
 
     trainIndex++;
-    updateInfo();
 };
 
 
 // 4. Use Firebase data to populate the site's table
 function updateInfo() {
-    database.ref().on("child_added", function(snap){
-        // console.log(snap);
-        // console.log(snap.val());
-        // console.log(snap.val()[0].name);
-        // console.log(snap.val()["0"]);
-        $("tbody").append($("<tr>").append($("<td>"+snap.val()[trainIndex].name+"</td>")));
-        console.log(trainIndex);
-        
-    });
-}
-
-
-database.ref("/trains").on("value", function(snap){
-    // console.log(snap.val());
     
-});
+    $("tbody").empty();
+
+    for (let i = 0; i < snapshot.length; i++) {
+        var name = $("<td>"+snapshot[i].name+"</td>");
+        var destination = $("<td>"+snapshot[i].destination+"</td>");
+        var firstTrain = $("<td>"+snapshot[i].firstTrain+"</td>");
+        var frequency = $("<td>"+snapshot[i].frequency+"</td>");
+        var nextArrival = $("<td>"+snapshot[i].nextArrival+"</td>");
+        if(snapshot[i].plusDays === 0) {
+            plus = "&nbsp;"
+        } else {
+            plus = $("<td><span style='border-radius: 5px; padding: 3px; background-color: black; color: white; font-size: 0.5rem;'>+" + snapshot[i].plusDays + "</span></td>");
+            plusDays = 0;
+        };
+        var minutesAway = $("<td id='minutes-away'>"+snapshot[i].minutesAway+"</td>");
+        var trow = $("<tr id='row" + trainIndex + "'>");
+        $("tbody").append(trow).append(name, destination, firstTrain, frequency, nextArrival, plus, minutesAway);        
+    };
+};
+
+
+// Convert minutes to hours:minutes format
+function convert(t) {
+    var hours = Math.floor(parseInt(t/60));
+
+    if (hours < 10) {
+        hours = "0" + hours;
+    } else if (hours > 23) {
+        hoursNew = parseInt(hours - Math.floor(hours / 24) * 24);
+        plusDays = Math.floor(hours / 24);
+        if (hoursNew < 10) {
+            hoursNew = "0" + hoursNew;
+        };
+    };
+
+    var minutes = t - (hours * 60);
+    if (minutes === 0) {
+        minutes = "00";
+    } else if (minutes < 10) {
+    minutes = "0" + minutes;
+    };
+
+    if (hours < 23) {
+        t = hours + ":" + minutes;
+        return t;    
+    } else {
+        t = hoursNew + ":" + minutes;
+        return t;
+    };
+    
+};
+
+
+function clock() {
+    $("#clock").text(moment().format('MMMM D | H:mm:ss'));
+  }
+  
+  setInterval(clock, 1000);

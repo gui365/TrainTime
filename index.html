@@ -12,26 +12,28 @@
 <body>
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
-          <h1 class="display-4">Ride with UTP today</h1>
-          <p class="lead">Don't forget to apply for the UTP Citi Credit Card today and get 10% cash back on qualified purchases.</p>
+          <h1 class="display-4">Train Schedule</h1>
+          <p class="lead">Message here.</p>
         </div>
     </div>
 
     <div class="card">
-        <div class="card-header">
-          Schedule
+        <div class="card-header justify-content-between d-flex">
+            <div>Schedule</div>
+            <span id="clock" class="badge badge-warning"></span>
         </div>
         <div class="card-body">
-          <!-- <h5 class="card-title"></h5> -->
-          <table class="table">
+            <table class="table">
                 <thead class="thead-dark">
-                  <tr>
-                    <th scope="col">Train Name</th>
-                    <th scope="col">Destination</th>
-                    <th scope="col">Frequency (min)</th>
-                    <th scope="col">Next Arrival</th>
-                    <th scope="col">Departs in (min)</th>
-                  </tr>
+                    <tr>
+                        <th scope="col">Train Name</th>
+                        <th scope="col">Destination</th>
+                        <th scope="col">First Train</th>
+                        <th scope="col">Frequency (min)</th>
+                        <th scope="col">Next Arrival</th>
+                        <th id="days" scope="col"></th>
+                        <th scope="col">Departs in (min)</th>
+                    </tr>
                 </thead>
                 <tbody>
                   
