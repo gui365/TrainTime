@@ -77,13 +77,12 @@ function calculateNext() {
     currentTime = (moment().format("HH")*60) + (moment().format("mm")*1);
 
     if (firstTrain < currentTime) {
-        // nextArrival is the time of the first train, plus -> (currentTime - firstTrain) / frequency = ratio
         nextArrival = parseInt(firstTrain) + (Math.ceil((parseInt(currentTime) - parseInt(firstTrain)) / parseInt(frequency)) * parseInt(frequency));
         minutesAway = parseInt(nextArrival) - parseInt(currentTime);
         
     } else if (currentTime < firstTrain) {
-        // nextArrival is the time of the first train, plus -> (currentTime - firstTrain) / frequency = ratio
-        nextArrival = parseInt(firstTrain) - (Math.floor((parseInt(firstTrain) - parseInt(currentTime)) / parseInt(frequency)) * parseInt(frequency));
+        // nextArrival = parseInt(firstTrain) + parseInt(frequency) * Math.ceil(parseInt(firstTrain) / parseInt(frequency));
+        nextArrival = parseInt(firstTrain);
         minutesAway =  parseInt(nextArrival) - parseInt(currentTime);
 
     } else if (currentTime === firstTrain) {
@@ -157,6 +156,7 @@ function convert(t) {
     };
 
     var minutes = t - (hours * 60);
+
     if (minutes === 0) {
         minutes = "00";
     } else if (minutes < 10) {
