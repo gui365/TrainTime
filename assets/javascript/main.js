@@ -80,23 +80,22 @@ function calculateNext() {
         // nextArrival is the time of the first train, plus -> (currentTime - firstTrain) / frequency = ratio
         nextArrival = parseInt(firstTrain) + (Math.ceil((parseInt(currentTime) - parseInt(firstTrain)) / parseInt(frequency)) * parseInt(frequency));
         minutesAway = parseInt(nextArrival) - parseInt(currentTime);
-        console.log(nextArrival);
-        console.log(minutesAway);
-
+        
     } else if (currentTime < firstTrain) {
         // nextArrival is the time of the first train, plus -> (currentTime - firstTrain) / frequency = ratio
         nextArrival = parseInt(firstTrain) - (Math.floor((parseInt(firstTrain) - parseInt(currentTime)) / parseInt(frequency)) * parseInt(frequency));
         minutesAway =  parseInt(nextArrival) - parseInt(currentTime);
-        console.log(nextArrival);
-        console.log(minutesAway);
 
     } else if (currentTime === firstTrain) {
         nextArrival = parseInt(firstTrain) + parseInt(frequency);
         minutesAway = parseInt(nextArrival) - parseInt(currentTime);
     };
-    
+    // console.log("first before " + firstTrain);
+    // console.log("next before " + nextArrival);
     firstTrain = convert(firstTrain);
     nextArrival = convert(nextArrival);
+    // console.log("first after " + firstTrain);
+    // console.log("next after " + nextArrival);
 
     database.ref(trainIndex).update({
         name: name,
@@ -108,7 +107,7 @@ function calculateNext() {
         minutesAway: minutesAway
     });
 
-    trainIndex++;
+    // trainIndex++;
 };
 
 
@@ -116,13 +115,17 @@ function calculateNext() {
 function updateInfo() {
     
     $("tbody").empty();
-
+    console.log(snapshot);
+    console.log(snapshot.length);
+    trainIndex = snapshot.length;
+    
     for (let i = 0; i < snapshot.length; i++) {
         var name = $("<td>"+snapshot[i].name+"</td>");
         var destination = $("<td>"+snapshot[i].destination+"</td>");
         var firstTrain = $("<td>"+snapshot[i].firstTrain+"</td>");
         var frequency = $("<td>"+snapshot[i].frequency+"</td>");
         var nextArrival = $("<td>"+snapshot[i].nextArrival+"</td>");
+        
         if(snapshot[i].plusDays === 0) {
             plus = $("<td>");
         } else {
@@ -139,13 +142,15 @@ function updateInfo() {
 // Convert minutes to hours:minutes format
 function convert(t) {
     var hours = Math.floor(parseInt(t/60));
-    var hoursNew;
     
     if (hours < 10) {
         hours = "0" + hours;
     } else if (hours > 23) {
-        hoursNew = parseInt(hours - Math.floor(hours / 24) * 24);
+        // debugger;
+        var hoursNew = parseInt(hours - Math.floor(hours / 24) * 24);
         plusDays = Math.floor(hours / 24);
+        // console.log("plusDays " + plusDays);
+        
         if (hoursNew < 10) {
             hoursNew = "0" + hoursNew;
         };
@@ -170,7 +175,7 @@ function convert(t) {
 
 
 function clock() {
-    $("#clock").text(moment().format('MMMM D | H:mm:ss'));
+    $("#clock").text(moment().format('MMMM D, HH:mm:ss'));
   }
   
   setInterval(clock, 1000);

@@ -24,28 +24,33 @@ form {
 
 #clock {
     padding: 0.5rem 2rem;
-    font-size: 1rem;
+    font-size: 1.1rem;
+    font-family: "Cutive Mono", 'Courier New', Courier, monospace;
 }
 
 .jumbotron {
     background: linear-gradient(to right, rgb(3, 29, 53), rgb(123, 179, 224));
-    padding: 1rem 0;
+    padding: 1rem 2rem;
     margin: 0;
 }
 
+.inner-jumbo {
+    width: 50%;
+}
+
 #station-img {
-    width: 100vw;
+    width: 98vw;
 }
 
 #welcome {
     position: relative;
 }
 
-#welcome-title {
+#welcome-text {
     position: absolute;
     top: 0;
     right: 0;
-    padding: 2rem;
+    padding: 1rem 2rem;
     width: 45%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.6);
@@ -56,7 +61,7 @@ form {
 h2 {
     font-size: 1.7rem;
     color: rgb(123, 179, 224);
-    margin: 1rem 0;
+    margin: 0.5rem 0;
 }
 
 span, ul {
@@ -64,9 +69,14 @@ span, ul {
     font-size: 0.9rem;
 }
 
-.container {
-    margin: 0 1rem;
+ul {
+    line-height: 1.9;
+    list-style-type: none;
 }
+
+/* .container {
+    margin: 0 1rem;
+} */
 
 tr {
     border-radius: 10px;
@@ -123,7 +133,21 @@ a, a:hover {
     color: white;
 }
 
-@media screen and (max-width: 1200px) {
+#welcome-responsive, #span-responsive {
+    display: none;
+}
+
+#sign-in {
+    padding: 0 0.8rem;
+    /* background-color: rgba(255, 255, 255, 0.1); */
+    border-radius: 50%;
+    box-shadow: 0 3px rgba(7, 45, 102, 0.4);
+}
+
+
+/* Media queries */
+
+@media screen and (max-width: 1050px) {
     #wrapper {
         flex-wrap: wrap;
         flex-direction: column;
@@ -141,4 +165,38 @@ a, a:hover {
         font-size: 1.5vw;
     }
 
+    #welcome-responsive, #span-responsive {
+        display: block;
+    }
+
+    h2 {
+        margin-top: 0;
+    }
+
+    #welcome-heading, #welcome-message {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    #span-responsive {
+        display: none;
+    }
+
+    #sign-in {
+        background: none;
+        box-shadow: none;
+    }
+}
+
+@media screen and (max-width: 470px) {
+    h2 {
+        font-size: 100%;
+    }
+}
+
+@media screen and (max-width: 340px) {
+    #welcome {
+        display: none;
+    }
 }
