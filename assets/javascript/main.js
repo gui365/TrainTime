@@ -163,7 +163,7 @@ function convert(t) {
     minutes = "0" + minutes;
     };
 
-    if (hours < 23) {
+    if (hours <= 23) {
         t = hours + ":" + minutes;
         return t;    
     } else {
